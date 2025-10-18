@@ -1,64 +1,54 @@
 features:
   - via  # 启用VIA在线改键
 
-# 蓝牙设备配置（3个设备，可连电脑/手机/平板）
+# 蓝牙仅配置1个设备（删除多余设备，只保留1个）
 bluetooth:
-  - name: "电脑"
-    select: 1
-  - name: "手机"
-    select: 2
-  - name: "平板"
-    select: 3
+  - name: "我的设备"  # 自定义设备名（如“办公电脑”）
+    select: 1  # 仅支持1个设备，编号固定为1
 
-# 按键层（默认层+蓝牙切换层+预留层）
+# 按键层：USB和蓝牙模式功能完全一致（无需单独区分模式）
 layers:
-  - name: BASE  # 默认层（日常打字）
+  - name: BASE  # 默认层（所有模式共用）
     keys:
-      - &kp Q        # 0:第1行1列
-      - &kp W        # 1:第1行2列
-      - &kp E        # 2:第1行3列
-      - &kp R        # 3:第1行4列
-      - &kp A        # 4:第2行1列
-      - &kp S        # 5:第2行2列
-      - &kp D        # 6:第2行3列
-      - &kp F        # 7:第2行4列
-      - &kp Z        # 8:第3行1列
-      - &kp X        # 9:第3行2列
-      - &kp C        # 10:第3行3列
-      - &kp V        # 11:第3行4列
-      - &kp LSHIFT   # 12:独立键（左Shift）
+      - &kp Q        # 0: 第1行1列
+      - &kp W        # 1: 第1行2列
+      - &kp E        # 2: 第1行3列
+      - &kp R        # 3: 第1行4列
+      - &kp A        # 4: 第2行1列
+      - &kp S        # 5: 第2行2列
+      - &kp D        # 6: 第2行3列
+      - &kp F        # 7: 第2行4列
+      - &kp Z        # 8: 第3行1列
+      - &kp X        # 9: 第3行2列
+      - &kp C        # 10: 第3行3列
+      - &kp V        # 11: 第3行4列
+      - &kp LSHIFT   # 12: 独立键（左Shift）
 
-  - name: BT  # 蓝牙切换层（按此层键切换设备）
+  - name: FUNC  # 功能层（预留，可自定义快捷键）
     keys:
-      - &trans       # 透明键（继承BASE层Q）
-      - &trans       # 继承W
-      - &trans       # 继承E
-      - &bt BT_SEL 1 # 切换到“电脑”
-      - &trans       # 继承A
-      - &trans       # 继承S
-      - &trans       # 继承D
-      - &bt BT_SEL 2 # 切换到“手机”
-      - &trans       # 继承Z
-      - &trans       # 继承X
-      - &trans       # 继承C
-      - &trans       # 继承V
-      - &bt BT_SEL 3 # 切换到“平板”
+      - &trans       # 0: 透明（继承BASE层）
+      - &trans       # 1: 透明
+      - &trans       # 2: 透明
+      - &bt BT_SEL 1 # 3: 重连蓝牙设备（仅1个设备，固定连这个）
+      - &trans       # 4: 透明
+      - &trans       # 5: 透明
+      - &trans       # 6: 透明
+      - &bt BT_CLR 1 # 7: 清除蓝牙配对记录（如需重新配对时用）
+      - &trans       # 8: 透明
+      - &trans       # 9: 透明
+      - &trans       # 10: 透明
+      - &trans       # 11: 透明
+      - &trans       # 12: 透明
 
-  - name: FUNC  # 预留功能层（可自定义快捷键）
-    keys: [ &trans ] * 13  # 全透明，默认继承上一层
-
-# 旋钮功能（旋转+按下）
+# 旋钮功能：USB和蓝牙模式完全一致
 encoders:
   - node: encoder0
     taps:
-      - &kp ENTER  # 旋钮按下=回车
+      - &kp ENTER  # 旋钮按下=回车（所有模式相同）
     layers:
-      - layer: BASE
-        clockwise: &kp VOL_UP       # 顺时针=音量+
-        counter-clockwise: &kp VOL_DOWN  # 逆时针=音量-
-      - layer: BT
-        clockwise: &kp PGUP         # 顺时针=上翻页
-        counter-clockwise: &kp PGDN  # 逆时针=下翻页
-      - layer: FUNC
-        clockwise: &kp HOME         # 顺时针=Home
-        counter-clockwise: &kp END   # 逆时针=End
+      - layer: BASE  # 默认层：控制音量
+        clockwise: &kp VOL_UP
+        counter-clockwise: &kp VOL_DOWN
+      - layer: FUNC  # 功能层：控制翻页
+        clockwise: &kp PGUP
+        counter-clockwise: &kp PGDN
