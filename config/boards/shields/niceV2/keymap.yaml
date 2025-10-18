@@ -1,0 +1,64 @@
+features:
+  - via  # 启用VIA在线改键
+
+# 蓝牙设备配置（3个设备，可连电脑/手机/平板）
+bluetooth:
+  - name: "电脑"
+    select: 1
+  - name: "手机"
+    select: 2
+  - name: "平板"
+    select: 3
+
+# 按键层（默认层+蓝牙切换层+预留层）
+layers:
+  - name: BASE  # 默认层（日常打字）
+    keys:
+      - &kp Q        # 0:第1行1列
+      - &kp W        # 1:第1行2列
+      - &kp E        # 2:第1行3列
+      - &kp R        # 3:第1行4列
+      - &kp A        # 4:第2行1列
+      - &kp S        # 5:第2行2列
+      - &kp D        # 6:第2行3列
+      - &kp F        # 7:第2行4列
+      - &kp Z        # 8:第3行1列
+      - &kp X        # 9:第3行2列
+      - &kp C        # 10:第3行3列
+      - &kp V        # 11:第3行4列
+      - &kp LSHIFT   # 12:独立键（左Shift）
+
+  - name: BT  # 蓝牙切换层（按此层键切换设备）
+    keys:
+      - &trans       # 透明键（继承BASE层Q）
+      - &trans       # 继承W
+      - &trans       # 继承E
+      - &bt BT_SEL 1 # 切换到“电脑”
+      - &trans       # 继承A
+      - &trans       # 继承S
+      - &trans       # 继承D
+      - &bt BT_SEL 2 # 切换到“手机”
+      - &trans       # 继承Z
+      - &trans       # 继承X
+      - &trans       # 继承C
+      - &trans       # 继承V
+      - &bt BT_SEL 3 # 切换到“平板”
+
+  - name: FUNC  # 预留功能层（可自定义快捷键）
+    keys: [ &trans ] * 13  # 全透明，默认继承上一层
+
+# 旋钮功能（旋转+按下）
+encoders:
+  - node: encoder0
+    taps:
+      - &kp ENTER  # 旋钮按下=回车
+    layers:
+      - layer: BASE
+        clockwise: &kp VOL_UP       # 顺时针=音量+
+        counter-clockwise: &kp VOL_DOWN  # 逆时针=音量-
+      - layer: BT
+        clockwise: &kp PGUP         # 顺时针=上翻页
+        counter-clockwise: &kp PGDN  # 逆时针=下翻页
+      - layer: FUNC
+        clockwise: &kp HOME         # 顺时针=Home
+        counter-clockwise: &kp END   # 逆时针=End
