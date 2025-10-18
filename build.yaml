@@ -1,5 +1,7 @@
 board:
-  - pro_micro_nrf52840  # 必须严格写对（下划线、nrf52840）
+  - nice_nano_v2  # nice!nano V2.0的官方识别名（必须严格写对）
+
 shield:
-  - niceV2
+  - niceV2  # 键盘配置文件夹名（不变）
+
 include: []
