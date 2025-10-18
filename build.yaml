@@ -18,3 +18,12 @@
 #     artifact-name: corne_left_with_studio
 #
 ---
+# 只保留你的开发板和键盘配置（删除其他默认值）
+board:
+  - pro_micro_nrf52840  # 你的开发板
+
+shield:
+  - niceV2  # 你的键盘配置（和文件夹名一致）
+
+# 下面的内容不动（保持默认）
+include: []
