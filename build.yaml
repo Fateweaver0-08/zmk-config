@@ -1,7 +1,5 @@
 board:
-  - pro_micro_nrf52840  # 你的开发板，前面必须有“- ”（减号+空格）
-
+  - pro_micro_nrf52840  # 必须严格写对（下划线、nrf52840）
 shield:
-  - niceV2  # 你的键盘配置，前面必须有“- ”（减号+空格）
-
-include: []  # 保持空列表，不要删
+  - niceV2
+include: []
