@@ -1,3 +1,3 @@
 config SHIELD_NICEV2
-    bool "niceV2"  # 键盘名称（与文件夹名一致）
-    depends on BOARD_PRO_MICRO_NRF52840  # 绑定开发板
+    bool "niceV2"
+    depends on BOARD_NICE_NANO_V2  // 改为nice!nano V2.0的开发板依赖
