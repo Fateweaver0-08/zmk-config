@@ -3,8 +3,8 @@
 
 / {
     chosen {
-        zmk,kscan = &kscan0;       // 绑定矩阵扫描器
-        zmk,encoder = &encoder0;   // 绑定旋钮
+        zmk,kscan = &kscan0;       // 矩阵扫描器
+        zmk,encoder = &encoder0;   // 旋钮
     };
 
     // 3×4矩阵按键（12键）
@@ -12,50 +12,50 @@
         compatible = "zmk,kscan-gpio-matrix";
         label = "KSCAN_MATRIX";
 
-        // 行引脚（D2、D3、D4）
+        // 行引脚（D2、D3、D4，改为nice!nano的引脚命名）
         row-gpios
-            = <&pro_micro_d2 GPIO_ACTIVE_LOW>
-              <&pro_micro_d3 GPIO_ACTIVE_LOW>
-              <&pro_micro_d4 GPIO_ACTIVE_LOW>
+            = <&nice_nano_d2 GPIO_ACTIVE_LOW>
+              <&nice_nano_d3 GPIO_ACTIVE_LOW>
+              <&nice_nano_d4 GPIO_ACTIVE_LOW>
               ;
 
-        // 列引脚（D5、D6、D7、D8）
+        // 列引脚（D5、D6、D7、D8，改为nice!nano的引脚命名）
         col-gpios
-            = <&pro_micro_d5 GPIO_ACTIVE_LOW>
-              <&pro_micro_d6 GPIO_ACTIVE_LOW>
-              <&pro_micro_d7 GPIO_ACTIVE_LOW>
-              <&pro_micro_d8 GPIO_ACTIVE_LOW>
+            = <&nice_nano_d5 GPIO_ACTIVE_LOW>
+              <&nice_nano_d6 GPIO_ACTIVE_LOW>
+              <&nice_nano_d7 GPIO_ACTIVE_LOW>
+              <&nice_nano_d8 GPIO_ACTIVE_LOW>
               ;
 
-        // 矩阵映射（3行4列 → 12个键的索引0-11）
+        // 矩阵映射（不变，与硬件布局对应）
         matrix-transform = <
             MATRIX_TRANSFORM(3, 4,
-                0,  1,  2,  3,    // 第1行：索引0-3
-                4,  5,  6,  7,    // 第2行：索引4-7
-                8,  9, 10, 11     // 第3行：索引8-11
+                0,  1,  2,  3,    // 第1行
+                4,  5,  6,  7,    // 第2行
+                8,  9, 10, 11     // 第3行
             )
         >;
     };
 
-    // 独立按键（第13键，索引12，引脚D9）
+    // 独立按键（第13键，D9，改为nice!nano的引脚命名）
     input_keys: input-keys {
         compatible = "zmk,input-keys";
         label = "INDEPENDENT_KEY";
         key_0: key_0 {
-            gpios = <&pro_micro_d9 GPIO_ACTIVE_LOW>;
-            linux,code = <KEY_RESERVED>;  // 占位，VIA可改
+            gpios = <&nice_nano_d9 GPIO_ACTIVE_LOW>;
+            linux,code = <KEY_RESERVED>;
         };
     };
 
-    // 旋钮（编码器，A相D10、B相D13）
+    // 旋钮（D10、D13，改为nice!nano的引脚命名）
     encoder0: encoder {
         compatible = "zmk,encoder";
         label = "ENCODER";
-        a-gpios = <&pro_micro_d10 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        b-gpios = <&pro_micro_d13 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        resolution = <4>;  // EC11编码器标准分辨率
+        a-gpios = <&nice_nano_d10 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        b-gpios = <&nice_nano_d13 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        resolution = <4>;
     };
 };
 
-// 引用Pro Micro NRF52840引脚定义（路径正确）
-#include "../pro_micro_nrf52840.dtsi"
+// 引用nice!nano V2.0的引脚定义（路径正确）
+#include "../nice_nano_v2.dtsi"
